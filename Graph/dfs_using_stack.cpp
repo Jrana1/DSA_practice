@@ -9,29 +9,31 @@ int graph[8][8] = {
     {0, 0, 0, 1, 1, 0, 1, 1},
     {0, 0, 0, 0, 0, 1, 0, 1},
     {0, 0, 0, 0, 0, 1, 1, 0}};
-
 int visited[8] = {0};
-
 void dfs(int v)
 {
 
-    if (visited[v] == 0)
+    stack<int> vertices;
+    cout << v << ",";
+    visited[v] = 1;
+    vertices.push(v);
+    while (!vertices.empty())
     {
-        cout << v << ",";
-        visited[v] = 1;
-    }
-    for (int i = 1; i < 8; i++)
-    {
-        if (visited[i] == 0 && graph[v][i] == 1)
+        int u = vertices.top();
+        vertices.pop();
+        for (int i = 0; i < 8; i++)
         {
-            dfs(i);
+            if (visited[i] == 0 && graph[u][i] == 1)
+            {
+                cout << i << " ,";
+                visited[i] = 1;
+                vertices.push(i);
+            }
         }
     }
 }
 int main()
 {
-
-    dfs(7);
-
+    dfs(3);
     return 0;
 }
