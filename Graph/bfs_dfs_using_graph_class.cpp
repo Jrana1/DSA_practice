@@ -10,6 +10,7 @@ private:
     vector<int> *adj_mat;
 
 public:
+    void init();
     Graph(int V = 1)
     {
         this->V = V;
@@ -22,8 +23,34 @@ public:
     int number_of_edges() const;
     void BFS(int start);
     bool isConnected() const;
+    void DFS(int start);
 };
 
+void Graph::DFS(int start)
+{
+
+    if (visited[start] == false)
+    {
+        cout << start << " ";
+        visited[start] = true;
+    }
+    for (auto u : adj_mat[start])
+    {
+        if (visited[u] == false)
+        {
+            DFS(u);
+        }
+    }
+}
+
+void Graph::init()
+{
+
+    for (int i = 0; i < V; i++)
+    {
+        visited.push_back(false);
+    }
+}
 bool Graph::isConnected() const
 {
     for (auto i = 0; i < V; i++)
@@ -40,10 +67,7 @@ void Graph::BFS(int start)
 {
 
     // init visited array with false
-    for (int i = 0; i < V; i++)
-    {
-        visited.push_back(false);
-    }
+    init();
 
     queue<int> q;
     cout << start << " ";
@@ -127,12 +151,11 @@ int main()
     // g1.add_edge(1, 4);
     g1.add_edge(1, 3);
     g1.add_edge(2, 3);
-    // g1.add_edge(3, 4);
+    g1.add_edge(3, 4);
     // g1.print_graph();
     // cout << g1.number_of_edges() << endl;
-    g1.BFS(1);
-    cout << endl
-         << g1.isConnected() << endl;
+    g1.init();
+    g1.DFS(4);
 
     return 0;
 }
