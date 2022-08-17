@@ -37,10 +37,10 @@ void display(Node *head)
 {
     while (head)
     {
-        cout << head->data << " ";
+        cout << head->data << "->";
         head = head->next;
     }
-    cout << endl;
+    cout << "NULL" << endl;
 }
 /// function to find the length of a list
 int len(Node *head)
@@ -330,17 +330,109 @@ bool hasLoop1(Node *head)
     nodes.clear();
     return false;
 }
+
+// How to find the intersecting point of two linked lists
+
+// Method 1 : using two stacks
+
+Node *intersecting_node(Node *h1, Node *h2)
+{
+
+    stack<Node *> nodes1;
+    stack<Node *> nodes2;
+    while (h1)
+    {
+        nodes1.push(h1);
+        h1 = h1->next;
+    }
+    while (h2)
+    {
+        nodes2.push(h2);
+        h2 = h2->next;
+    }
+    Node *tmp;
+    while (nodes1.top() == nodes2.top())
+    {
+
+        tmp = nodes1.top();
+        nodes1.pop();
+        nodes2.pop();
+    }
+    return tmp;
+}
+
+// Method 2: without any extra space
+// first find the len of both lists
+// second determine the largest list between both of them
+// third  find the diff between l1 and l2
+// fourth  bring the start position of largest list at the same position like the other list
+// now iterate throught both the lists and check if both of the nodes habe the same address then return true
+// otherwise return false
+Node *intersecting_node1(Node *h1, Node *h2)
+{
+
+    int l1 = len(h1);
+    int l2 = len(h2);
+    Node *ptr1, *ptr2;
+    int d = 0;
+    if (l1 > l2)
+    {
+        d = l1 - l2;
+        ptr1 = h1;
+        ptr2 = h2;
+    }
+    else
+    {
+        d = l2 - l1;
+        ptr1 = h2;
+        ptr2 = h1;
+    }
+    // d--;
+    while (d)
+    {
+        d--;
+        ptr1 = ptr1->next;
+    }
+    while (ptr1 && ptr2)
+    {
+
+        if (ptr1 == ptr2)
+        {
+            return ptr1;
+        }
+        ptr1 = ptr1->next;
+        ptr2 = ptr2->next;
+    }
+    return NULL;
+}
 int main()
 {
-    Node *head1 = NULL;
 
-    head1 = add_node(head1, 1);
-    add_node(head1, 2);
-    add_node(head1, 0);
-    add_node(head1, 3);
-    cout << hasLoop1(head1) << endl;
-    head1->next->next->next = head1->next;
-    cout << hasLoop1(head1) << endl;
+    Node *h1 = NULL, *h2 = NULL;
+    h1 = add_node(h1, 5);
+    add_node(h1, 7);
+    add_node(h1, 8);
+    add_node(h1, 9);
+    add_node(h1, 10);
+    h2 = add_node(h2, 0);
+    add_node(h2, 1);
+    display(h1);
+    display(h2);
+    // making intersecting point between two lists
+
+    h2->next->next = h1->next;
+    display(h2);
+    cout << intersecting_node1(h1, h2)->data << endl;
+    // cout << intersecting_node(h1, h2)->data << endl;
+    // Node *head1 = NULL;
+
+    // head1 = add_node(head1, 1);
+    // add_node(head1, 2);
+    // add_node(head1, 0);
+    // add_node(head1, 3);
+    // cout << hasLoop1(head1) << endl;
+    // head1->next->next->next = head1->next;
+    // cout << hasLoop1(head1) << endl;
 
     return 0;
 }
