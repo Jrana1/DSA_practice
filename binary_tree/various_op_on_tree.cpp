@@ -127,6 +127,22 @@ int count_node_degree_one(Node *root)
         }
     }
 }
+
+int fun(Node *root)
+{
+    int x, y;
+    if (root)
+    {
+
+        x = fun(root->left);
+        y = fun(root->right);
+        if (x > y)
+            return x + 1;
+        else
+            return y + 1;
+    }
+    return 0;
+}
 int main()
 {
 
@@ -135,6 +151,7 @@ int main()
     cout << count_nodes_having_two_children(root) << endl;
     cout << count_node_degree_one(root) << endl;
     cout << count_leaf_node(root) << endl;
+    cout << fun(root) << endl;
 
     return 0;
 }
