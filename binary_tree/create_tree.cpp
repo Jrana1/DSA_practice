@@ -51,46 +51,9 @@ void create_tree()
         }
     }
 }
-// pre-order traversal
-void pre_order(Node *ptr)
-{
-    if (ptr)
-    {
-        cout << ptr->data << " ";
-        pre_order(ptr->left);
-        pre_order(ptr->right);
-    }
-}
-// in-order traversal
-void in_order(Node *ptr)
-{
 
-    if (ptr)
-    {
-        in_order(ptr->left);
-        cout << ptr->data << " ";
-        in_order(ptr->right);
-    }
-}
-// post-order traversal
-void post_order(Node *ptr)
-{
-
-    if (ptr)
-    {
-        post_order(ptr->left);
-        post_order(ptr->right);
-        cout << ptr->data << " ";
-    }
-}
 int main()
 {
     create_tree();
-    cout << "pre-order>";
-    pre_order(root);
-    cout << "\ninorder>";
-    in_order(root);
-    cout << "\npost-order>";
-    post_order(root);
     return 0;
 }
